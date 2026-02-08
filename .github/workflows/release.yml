@@ -27,13 +27,23 @@ jobs:
 
       - name: Install Cosmocc 4.0.2
         run: |
+          set -euo pipefail
           curl -fL "https://cosmo.zip/pub/cosmocc/cosmocc-4.0.2.zip" -o cosmocc.zip
           COSMO_ROOT="$RUNNER_TEMP/cosmocc"
           rm -rf "$COSMO_ROOT"
           mkdir -p "$COSMO_ROOT"
           unzip -q -o cosmocc.zip -d "$COSMO_ROOT"
-          COSMO_DIR="$(find "$COSMO_ROOT" -maxdepth 1 -type d -name 'cosmocc-*' | head -n 1)"
-          test -n "$COSMO_DIR"
+          COSMO_DIR="$(find "$COSMO_ROOT" -maxdepth 1 -type d -name 'cosmocc-*' | head -n 1 || true)"
+          if [ -z "${COSMO_DIR:-}" ]; then
+            if [ -x "$COSMO_ROOT/bin/cosmocc" ]; then
+              COSMO_DIR="$COSMO_ROOT"
+            else
+              echo "cosmocc installation layout not detected in $COSMO_ROOT"
+              find "$COSMO_ROOT" -maxdepth 3 -type f | head -n 50
+              exit 1
+            fi
+          fi
+          test -x "$COSMO_DIR/bin/cosmocc"
           echo "$COSMO_DIR/bin" >> "$GITHUB_PATH"
           "$COSMO_DIR/bin/cosmocc" --version
 
