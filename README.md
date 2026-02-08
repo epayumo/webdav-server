@@ -73,3 +73,11 @@ O workflow em `.github/workflows/release.yml`:
 ## Interface
 
 ![Interface WebDAV](webdav.png)
+
+## Autor
+
+- Samuel Godoy: https://github.com/samuelgodoy
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT. Você pode usar, modificar e distribuir livremente, desde que mantenha os créditos/autoria no software.
